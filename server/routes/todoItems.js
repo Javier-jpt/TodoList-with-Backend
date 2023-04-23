@@ -4,13 +4,14 @@ const todoItemModel = require('../models/todoItems');
 
 // Creating Routes -- Add todo Items to Database.
 router.post('/api/item', async (req,res)=> {
+  console.log('Hello')
   try{
     const newItem = new todoItemModel({
       item: req.body.item
     })
     // Here we sabe the item in DataBase
     const saveItem = await newItem.save()
-    res.status(200).json('Item Added Successfully.');
+    res.status(200).json(saveItem);
   }catch(err){
     res.json(err);
   }

@@ -2,7 +2,7 @@ POST http://localhost:5500/api/item
 Content-Type: application/json
 
 {
-  "item": "This is the third ToDo item"
+  "item": "This is the first ToDo item"
 }
 
 ### 
