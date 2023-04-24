@@ -15,16 +15,14 @@ app.use(cors())
 
 // Here we import Routes
 
-const todoItemRoute = require('./routes/todoItems');
+const todoItemRouter = require('./routes/todoItems');
+
+app.use('/items', todoItemRouter);
 
 // Connect to mongoDB
 mongoose.connect(process.env.DB_CONNECT)
-.then(()=> console.log("Database Connected"))
+.then(()=> {
+  console.log("Database Connected")
+  app.listen(PORT, ()=> console.log("Server connected"))
+})
 .catch(err => console.log(err))
-
-app.use('/', todoItemRoute);
-
-
-
-//Add Port and connect to server
-app.listen(PORT, ()=> console.log("Server connected"))

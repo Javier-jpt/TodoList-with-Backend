@@ -1,26 +1,25 @@
-POST http://localhost:5500/api/item
+POST http://localhost:5500/items
 Content-Type: application/json
 
 {
-  "item": "Prueba nueva"
+  "item": "Prueba nueva Controller 1"
 }
 
 ### 
 
-GET http://localhost:5500/api/items
+GET http://localhost:5500/items
 Content-Type: application/json
 
 ### 
 
-PUT http://localhost:5500/api/item/644659f0afc67dc2432c1862
+PATCH http://localhost:5500/items/644673b5b25b7eff89b7f288
 Content-Type: application/json
 
 {
-  "item": "This is the first ToDo item updated!"
+  "item": "Prueba nueva Controller 1 update"
 }
 
 ### 
 
-DELETE http://localhost:5500/api/item/644659f0afc67dc2432c1862
-Content-Type: application/json
+DELETE http://localhost:5500/items/64467646cbf6d15c71ce3139
 

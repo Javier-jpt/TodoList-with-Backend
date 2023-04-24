@@ -1,8 +1,7 @@
 import './App.scss';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-
-
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
 
@@ -15,7 +14,7 @@ function App() {
   const addItem = async (e) => {
     e.preventDefault();
     try{
-      const res = await axios.post('http://localhost:5500/api/item', {item: itemText})
+      const res = await axios.post('http://localhost:5500/items', {item: itemText})
       setListItems(prev => [...prev, res.data]);
       setItemText('');
     }catch(err){
@@ -28,7 +27,7 @@ function App() {
   useEffect(() =>{
     const getItemsList = async () => {
       try{
-        const res = await axios.get('http://localhost:5500/api/items')
+        const res = await axios.get('http://localhost:5500/items')
         setListItems(res.data)
       }catch(err){
         console.log(err);
@@ -41,7 +40,7 @@ function App() {
 
 const deleteItem = async (id) => {
   try{
-    const res = await axios.delete(`http://localhost:5500/api/item/${id}`)
+    const res = await axios.delete(`http://localhost:5500/items/${id}`)
     const newListItems = listItems.filter(item => item._id !== id)
     setListItems(newListItems);
     console.log(res.data)
@@ -55,7 +54,7 @@ const deleteItem = async (id) => {
 const updateItem = async (e) => {
   e.preventDefault()
   try{
-    const res = await axios.put(`http://localhost:5500/api/item/${isUpdating}`, {item: updateItemText})
+    const res = await axios.put(`http://localhost:5500/items/${isUpdating}`, {item: updateItemText})
     console.log(res.data);
     const updatedItemIndex = listItems.findIndex(item => item._id === isUpdating);
     const updatedItem = listItems[updatedItemIndex].item = updateItemText;
@@ -86,14 +85,14 @@ const renderUpdateForm = () => (
         <div className="todo__listitems">
           {
             listItems.map(item => (
-              <div className="todo__listitems--item todo-item">
+              <div className="todo__listitems--item" key={uuidv4()}>
               {
                 isUpdating === item._id
                 ? renderUpdateForm()
                 : <>
-                    <p className="todo__listitems--item__content item-content">{item.item}</p>
-                    <button className="todo__listitems--item__update update-item" onClick={()=>{setIsUpdating(item._id)}}>Edit</button>
-                    <button className="todo__listitems--item__delete delete-item" onClick={() => {deleteItem(item._id)}}>Delete</button>
+                    <p className="todo__listitems--item__content">{item.item}</p>
+                    <button className="todo__listitems--item__update" onClick={()=>{setIsUpdating(item._id)}}>Edit</button>
+                    <button className="todo__listitems--item__delete" onClick={() => {deleteItem(item._id)}}>Delete</button>
                   </>
               }
               </div>
