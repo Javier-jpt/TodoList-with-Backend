@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
@@ -44,6 +44,7 @@ const deleteItem = async (id) => {
     const res = await axios.delete(`http://localhost:5500/api/item/${id}`)
     const newListItems = listItems.filter(item => item._id !== id)
     setListItems(newListItems);
+    console.log(res.data)
   }catch(err){
     console.log(err);
   }
@@ -58,6 +59,7 @@ const updateItem = async (e) => {
     console.log(res.data);
     const updatedItemIndex = listItems.findIndex(item => item._id === isUpdating);
     const updatedItem = listItems[updatedItemIndex].item = updateItemText;
+    console.log(updatedItem);
     setUpdateItemText('');
     setIsUpdating('')
   }catch(err){
@@ -69,29 +71,29 @@ const updateItem = async (e) => {
 
 const renderUpdateForm = () => (
   <form className='update-form' onSubmit={(e)=>{updateItem(e)}}>
-  <input className="update-new-input" type="text" placeholder="New Item" onChange={e => {setUpdateItemText(e.target.value)}} value={updateItemText} />
-  <button className="update-new-btn" type="submit"> Update </button>
+    <input className="update-form__input" type="text" placeholder="New Item" onChange={e => {setUpdateItemText(e.target.value)}} value={updateItemText} />
+    <button className="update-form__btn" type="submit"> Update </button>
   </form>
 )
 
   return (
-    <div className="App">
-      <h1> ToDo List </h1>
-        <form className="form" onSubmit={e => addItem(e)}>
-          <input type="text" placeholder="Add Item" onChange={e => {setItemText(e.target.value)}} value={itemText}/>
-          <button type="submit">ADD</button>
-        </form>
-        <div className="todo-listitems">
+    <div className="todo">
+      <h1> Wish List </h1>
+      <form className="todo__form" onSubmit={e => addItem(e)}>
+        <input type="text" placeholder="ADD NEW WISH" onChange={e => {setItemText(e.target.value)}} value={itemText}/>
+        <button type="submit">ADD</button>
+      </form>
+        <div className="todo__listitems">
           {
             listItems.map(item => (
-              <div className="todo-item">
+              <div className="todo__listitems--item todo-item">
               {
                 isUpdating === item._id
                 ? renderUpdateForm()
                 : <>
-                    <p className="item-content">{item.item}</p>
-                    <button className="update-item" onClick={()=>{setIsUpdating(item._id)}}>Edit</button>
-                    <button className="delete-item" onClick={() => {deleteItem(item._id)}}>Delete</button>
+                    <p className="todo__listitems--item__content item-content">{item.item}</p>
+                    <button className="todo__listitems--item__update update-item" onClick={()=>{setIsUpdating(item._id)}}>Edit</button>
+                    <button className="todo__listitems--item__delete delete-item" onClick={() => {deleteItem(item._id)}}>Delete</button>
                   </>
               }
               </div>
