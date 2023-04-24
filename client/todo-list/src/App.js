@@ -54,7 +54,7 @@ const deleteItem = async (id) => {
 const updateItem = async (e) => {
   e.preventDefault()
   try{
-    const res = await axios.put(`http://localhost:5500/items/${isUpdating}`, {item: updateItemText})
+    const res = await axios.patch(`http://localhost:5500/items/${isUpdating}`, {item: updateItemText})
     console.log(res.data);
     const updatedItemIndex = listItems.findIndex(item => item._id === isUpdating);
     const updatedItem = listItems[updatedItemIndex].item = updateItemText;
@@ -70,10 +70,11 @@ const updateItem = async (e) => {
 
 const renderUpdateForm = () => (
   <form className='update-form' onSubmit={(e)=>{updateItem(e)}}>
-    <input className="update-form__input" type="text" placeholder="New Item" onChange={e => {setUpdateItemText(e.target.value)}} value={updateItemText} />
+    <input className="update-form__input" autoFocus type="text" placeholder="Update Item" onChange={e => {setUpdateItemText(e.target.value)}} value={updateItemText} />
     <button className="update-form__btn" type="submit"> Update </button>
   </form>
 )
+
 
   return (
     <div className="todo">
