@@ -34,7 +34,7 @@ router.get('/api/items', async (req,res)=>{
 // Here we update the item from Database
 
 router.put('/api/item/:id', async (req,res)=>{
-  try{  // finde the item by id and we update it
+  try{  // find the item by id and we update it
     const updateItem = await todoItemModel.findByIdAndUpdate(req.params.id, {$set: req.body});
     res.status(200).json('Item Updated');
   }catch(err){
